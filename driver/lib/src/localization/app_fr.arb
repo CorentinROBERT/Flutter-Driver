@@ -1,0 +1,13 @@
+{
+    "app_title":"Driver",
+    "driver":"Livreur",
+    "home":"Accueil",
+    "shift":"Temps de travail",
+    "settings":"Paramètres",
+    "disconnect":"Déconnexion",
+    "planning":"Planning",
+    "performance":"Performance",
+    "calendar":"Calendrier",
+    "unavailabilites":"Indisponibilités",
+    "end_shift":"Fin de travail"
+}

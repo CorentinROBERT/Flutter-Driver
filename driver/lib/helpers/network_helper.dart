@@ -28,8 +28,10 @@ class NetworkHelper {
   final double endLat;
 
   Future getData() async {
-    http.Response response = await http.get(Uri.parse(
-        '$url$pathParam?api_key=$apiKey&start=$startLng,$startLat&end=$endLng,$endLat'));
+    var urlQuery =
+        '$url$pathParam?api_key=$apiKey&start=$startLng,$startLat&end=$endLng,$endLat';
+    print(urlQuery);
+    http.Response response = await http.get(Uri.parse(urlQuery));
 
     if (response.statusCode == 200) {
       String data = response.body;

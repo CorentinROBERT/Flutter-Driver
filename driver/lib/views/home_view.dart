@@ -26,12 +26,13 @@ class HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          forceMaterialTransparency: true,
           backgroundColor: Colors.transparent,
           centerTitle: false,
           elevation: 0,
           title: Text(AppLocalizations.of(context)!.app_title),
         ),
-        //extendBodyBehindAppBar: body == mapview,
+        extendBodyBehindAppBar: body == mapview,
         drawer: Drawer(
           child: SafeArea(
             child: Column(

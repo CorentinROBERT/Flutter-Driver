@@ -1,5 +1,6 @@
 import 'package:driver/models/enum/home_section_enum.dart';
 import 'package:driver/views/home/map_view.dart';
+import 'package:driver/views/home/order_details.dart';
 import 'package:driver/views/home/settings.dart';
 import 'package:driver/views/home/shift.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +29,42 @@ class HomeViewState extends State<HomeView> {
         appBar: AppBar(
           forceMaterialTransparency: true,
           backgroundColor: Colors.transparent,
-          centerTitle: false,
+          centerTitle: true,
           elevation: 0,
-          title: Text(AppLocalizations.of(context)!.app_title),
+          title: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => OrderDetails(
+                        orderNumber: "JJA-1119",
+                      )));
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width / 1.5,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.more_horiz,
+                    color: Colors.pinkAccent,
+                    size: 30,
+                  ),
+                  Text(
+                    "JJA-1119",
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.white,
+                  )
+                ],
+              ),
+            ),
+          ),
         ),
         extendBodyBehindAppBar: body == mapview,
         drawer: Drawer(

@@ -165,11 +165,11 @@ class MapViewState extends State<MapView> {
                               color: Colors.greenAccent,
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Column(
+                            child: const Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.check_circle_outline,
                                   color: Colors.white,
                                 ),
@@ -306,10 +306,12 @@ class MapViewState extends State<MapView> {
   setMarkers(double endLat, double endLng) {
     if (Platform.isAndroid) {
       googleMarkers.add(google.Marker(
+          infoWindow: const google.InfoWindow(title: "Test"),
           markerId: const google.MarkerId("EndOfPoint"),
           position: google.LatLng(endLat, endLng)));
     } else {
       appleAnnotations.add(apple.Annotation(
+          infoWindow: const apple.InfoWindow(title: "test"),
           annotationId: apple.AnnotationId("EndOfPoint"),
           position: apple.LatLng(endLat, endLng)));
     }
@@ -327,7 +329,7 @@ class MapViewState extends State<MapView> {
     int hours = durationInSeconds ~/ 3600; // Integer division to get hours
     int minutes = (durationInSeconds % 3600) ~/ 60; // Get the remaining minutes
     int seconds = (durationInSeconds % 60).round(); // Get the remaining seconds
-    return DateFormat("HH:mm:ss").format(DateTime.now()
+    return DateFormat("HH:mm").format(DateTime.now()
         .add(Duration(hours: hours, minutes: minutes, seconds: seconds)));
   }
 
@@ -337,7 +339,7 @@ class MapViewState extends State<MapView> {
           "Time remaining ${formatDuration(orsResponse!.features.first.properties.segments.first.duration ?? 0.0)}";
     } else {
       remainingTime =
-          "Max time : ${formatRemainingDurationinHour(orsResponse!.features.first.properties.segments.first.duration ?? 0.0)}";
+          "Approx arrival time : ${formatRemainingDurationinHour(orsResponse!.features.first.properties.segments.first.duration ?? 0.0)}";
     }
     isRemainingTimeModeSecond = !isRemainingTimeModeSecond;
     setState(() {});

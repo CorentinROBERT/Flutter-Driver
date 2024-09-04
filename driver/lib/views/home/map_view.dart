@@ -32,19 +32,19 @@ class MapViewState extends State<MapView> {
   Set<apple.Annotation> appleAnnotations = {};
   Set<google.Marker> googleMarkers = {};
 
+  Set<apple.Circle> appleCircles = {};
+  Set<google.Circle> googleCircles = {};
+
   bool isRemainingTimeModeSecond = true;
   String remainingTime = "";
+
+  final double initLat = 48.866667;
+  final double initLng = 2.333333;
 
   static const google.CameraPosition _kGooglePlex = google.CameraPosition(
     target: google.LatLng(48.866667, 2.333333),
     zoom: 5,
   );
-
-  static const google.CameraPosition _kLake = google.CameraPosition(
-      bearing: 192.8334901395799,
-      target: google.LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 0.0,
-      zoom: 19.151926040649414);
 
   @override
   void initState() {
@@ -69,6 +69,7 @@ class MapViewState extends State<MapView> {
                   children: [
                     Platform.isAndroid
                         ? google.GoogleMap(
+                            circles: googleCircles,
                             padding: const EdgeInsets.only(top: 50),
                             mapType: google.MapType.normal,
                             myLocationButtonEnabled: true,
@@ -83,6 +84,7 @@ class MapViewState extends State<MapView> {
                             },
                           )
                         : apple.AppleMap(
+                            circles: appleCircles,
                             padding: const EdgeInsets.only(top: 30),
                             mapType: apple.MapType.standard,
                             compassEnabled: true,
@@ -92,8 +94,8 @@ class MapViewState extends State<MapView> {
                             annotations: appleAnnotations,
                             myLocationEnabled: true,
                             onMapCreated: _onMapCreated,
-                            initialCameraPosition: const apple.CameraPosition(
-                                target: apple.LatLng(48.866667, 2.333333),
+                            initialCameraPosition: apple.CameraPosition(
+                                target: apple.LatLng(initLat, initLng),
                                 zoom: 5.0),
                           ),
                     Visibility(
@@ -258,8 +260,8 @@ class MapViewState extends State<MapView> {
     NetworkHelper network = NetworkHelper(
       //Cannes lat: 43.552847 lng: 7.017369
       //Nice lat: 43.700000 lng: 7.250000
-      startLat: _locationData?.latitude ?? 43.552847,
-      startLng: _locationData?.longitude ?? 7.017369,
+      startLat: _locationData?.latitude ?? initLat,
+      startLng: _locationData?.longitude ?? initLng,
       endLat: endLat,
       endLng: endLng,
     );
@@ -279,6 +281,7 @@ class MapViewState extends State<MapView> {
       swapRemainingTime();
       setPolyLines();
       setMarkers(endLat, endLng);
+      setCircles();
     } catch (e) {
       print(e);
     }
@@ -343,5 +346,35 @@ class MapViewState extends State<MapView> {
     }
     isRemainingTimeModeSecond = !isRemainingTimeModeSecond;
     setState(() {});
+  }
+
+  void setCircles() {
+    if (Platform.isAndroid) {
+      final google.Circle googleCircle = google.Circle(
+        circleId: const google.CircleId("googleCircle"),
+        consumeTapEvents: true,
+        strokeColor: Colors.transparent,
+        fillColor: Colors.pinkAccent.withOpacity(0.5),
+        strokeWidth: 5,
+        center: google.LatLng(_locationData?.latitude ?? initLat,
+            _locationData?.longitude ?? initLng),
+        radius: 200,
+        onTap: () {},
+      );
+      googleCircles = {googleCircle};
+    } else {
+      final apple.Circle appleCircle = apple.Circle(
+        circleId: apple.CircleId("googleCircle"),
+        consumeTapEvents: true,
+        strokeColor: Colors.transparent,
+        fillColor: Colors.pinkAccent.withOpacity(0.5),
+        strokeWidth: 5,
+        center: apple.LatLng(_locationData?.latitude ?? initLat,
+            _locationData?.longitude ?? initLng),
+        radius: 200,
+        onTap: () {},
+      );
+      appleCircles = {appleCircle};
+    }
   }
 }

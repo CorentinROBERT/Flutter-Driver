@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:driver/helpers/calendar_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:scrollable_list_tab_scroller/scrollable_list_tab_scroller.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ShiftView extends StatefulWidget {
@@ -15,6 +17,34 @@ class ShiftState extends State<ShiftView> {
   DateTime? _selectedDay;
   late ValueNotifier<List<Event>> _selectedEvents;
 
+  bool isMondayMorning = false;
+  bool isMondayMidday = false;
+  bool isMondayNight = false;
+
+  bool isTuesdayMorning = false;
+  bool isTuesdayMidday = false;
+  bool isTuesdayNight = false;
+
+  bool isWednesdayMorning = false;
+  bool isWednesdayMidday = false;
+  bool isWednesdayNight = false;
+
+  bool isThursdayMorning = false;
+  bool isThursdayMidday = false;
+  bool isThursdayNight = false;
+
+  bool isFridayMorning = false;
+  bool isFridayMidday = false;
+  bool isFridayNight = false;
+
+  bool isSaturdayMorning = false;
+  bool isSaturdayMidday = false;
+  bool isSaturdayNight = false;
+
+  bool isSundayMorning = false;
+  bool isSundayMidday = false;
+  bool isSundayNight = false;
+
   @override
   void initState() {
     _selectedDay = _focusedDay;
@@ -27,6 +57,36 @@ class ShiftState extends State<ShiftView> {
     _selectedEvents.dispose();
     super.dispose();
   }
+
+  final data2 = {
+    DateTime.now(): ["07:00 - 09:00", "09:00 - 14:00", "15:00 - 19:30"],
+    DateTime.now().add(const Duration(days: 1)): [
+      "09:00 - 14:00",
+      "15:00 - 19:30",
+      "20:00 - 23:00"
+    ],
+    DateTime.now().add(const Duration(days: 2)): [
+      "09:00 - 14:00",
+      "15:00 - 19:30",
+      "20:00 - 23:00"
+    ],
+    DateTime.now().add(const Duration(days: 3)): [
+      "09:00 - 14:00",
+      "15:00 - 19:30",
+      "20:00 - 23:00",
+      "23:00 - 02:00"
+    ],
+    DateTime.now().add(const Duration(days: 4)): [
+      "09:00 - 14:00",
+      "15:00 - 19:30",
+      "20:00 - 23:00"
+    ],
+    DateTime.now().add(const Duration(days: 5)): [
+      "09:00 - 14:00",
+      "15:00 - 19:30",
+      "20:00 - 23:00"
+    ],
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +117,98 @@ class ShiftState extends State<ShiftView> {
             Expanded(
               child: TabBarView(
                 children: [
-                  Container(color: Colors.blue),
+                  ColoredBox(
+                    color: Colors.black,
+                    child: ScrollableListTabScroller.defaultComponents(
+                      headerContainerProps:
+                          const HeaderContainerProps(height: 70),
+                      tabBarProps: TabBarProps(
+                        enableFeedback: false,
+                        dividerColor: Colors.white.withAlpha(40),
+                      ),
+                      itemCount: data2.length,
+                      earlyChangePositionOffset: 30,
+                      tabBuilder:
+                          (BuildContext context, int index, bool active) =>
+                              Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 5),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: !active ? Colors.black : Colors.white,
+                              shape: BoxShape.circle),
+                          child: Column(
+                            children: [
+                              Text(
+                                DateFormat('dd/MM')
+                                    .format(data2.keys.elementAt(index)),
+                                style: !active
+                                    ? const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)
+                                    : const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                              ),
+                              Text(
+                                DateFormat('EEE.')
+                                    .format(data2.keys.elementAt(index)),
+                                style: !active
+                                    ? const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)
+                                    : const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      itemBuilder: (BuildContext context, int index) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 15, top: 5, bottom: 5),
+                            child: Text(
+                              DateFormat('dd-MM-yyyy')
+                                  .format(data2.keys.elementAt(index)),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          ...data2.values
+                              .elementAt(index)
+                              .asMap()
+                              .map(
+                                (index, value) => MapEntry(
+                                  index,
+                                  ListTile(
+                                    leading: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.grey),
+                                      alignment: Alignment.center,
+                                      child: Text(index.toString()),
+                                    ),
+                                    title: Text(
+                                      value,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .values
+                        ],
+                      ),
+                    ),
+                  ),
                   Column(
                     children: [
                       TableCalendar(
@@ -147,10 +298,10 @@ class ShiftState extends State<ShiftView> {
                                                 print('${value[index]}'),
                                             title: Text(
                                               '${value[index]}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white),
                                             ),
-                                            leading: Icon(
+                                            leading: const Icon(
                                               Icons.trip_origin,
                                               color: Color(0xff679fa3),
                                             ),
@@ -162,7 +313,7 @@ class ShiftState extends State<ShiftView> {
                               Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 5),
+                                  padding: const EdgeInsets.only(bottom: 10),
                                   child: ElevatedButton(
                                       onPressed: () {},
                                       style: ElevatedButton.styleFrom(
@@ -183,7 +334,501 @@ class ShiftState extends State<ShiftView> {
                       ),
                     ],
                   ),
-                  Container(color: Colors.green),
+                  ColoredBox(
+                    color: Colors.black,
+                    child: Stack(
+                      children: [
+                        SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ExpansionTile(
+                                childrenPadding:
+                                    const EdgeInsets.only(left: 20),
+                                collapsedIconColor: Colors.pink,
+                                iconColor: Colors.pink,
+                                title: const Text(
+                                  'Lundi',
+                                  style: TextStyle(
+                                      color: Colors.pink,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Matin",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isMondayMorning,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isMondayMorning = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Midi",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isMondayMidday,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isMondayMidday = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Soir",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isMondayNight,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isMondayNight = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              ExpansionTile(
+                                collapsedIconColor: Colors.pink,
+                                iconColor: Colors.pink,
+                                childrenPadding:
+                                    const EdgeInsets.only(left: 20),
+                                title: const Text(
+                                  'Mardi',
+                                  style: TextStyle(
+                                      color: Colors.pink,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Matin",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isTuesdayMorning,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isTuesdayMorning = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Midi",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isTuesdayMidday,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isTuesdayMidday = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Soir",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isTuesdayNight,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isTuesdayNight = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              ExpansionTile(
+                                collapsedIconColor: Colors.pink,
+                                iconColor: Colors.pink,
+                                childrenPadding:
+                                    const EdgeInsets.only(left: 20),
+                                title: const Text('Mercredi',
+                                    style: TextStyle(
+                                        color: Colors.pink,
+                                        fontWeight: FontWeight.bold)),
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Matin",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isWednesdayMorning,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isWednesdayMorning = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Midi",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isWednesdayMidday,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isWednesdayMidday = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Soir",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isWednesdayNight,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isWednesdayNight = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              ExpansionTile(
+                                collapsedIconColor: Colors.pink,
+                                iconColor: Colors.pink,
+                                childrenPadding:
+                                    const EdgeInsets.only(left: 20),
+                                title: const Text('Jeudi',
+                                    style: TextStyle(
+                                        color: Colors.pink,
+                                        fontWeight: FontWeight.bold)),
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Matin",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isThursdayMorning,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isThursdayMorning = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Midi",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isThursdayMidday,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isThursdayMidday = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Soir",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isThursdayNight,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isThursdayNight = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              ExpansionTile(
+                                collapsedIconColor: Colors.pink,
+                                iconColor: Colors.pink,
+                                childrenPadding:
+                                    const EdgeInsets.only(left: 20),
+                                title: const Text('Vendredi',
+                                    style: TextStyle(
+                                        color: Colors.pink,
+                                        fontWeight: FontWeight.bold)),
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Matin",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isFridayMorning,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isFridayMorning = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Midi",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isFridayMidday,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isFridayMidday = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Soir",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isFridayNight,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isFridayNight = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              ExpansionTile(
+                                collapsedIconColor: Colors.pink,
+                                iconColor: Colors.pink,
+                                childrenPadding:
+                                    const EdgeInsets.only(left: 20),
+                                title: const Text('Samedi',
+                                    style: TextStyle(
+                                        color: Colors.pink,
+                                        fontWeight: FontWeight.bold)),
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Matin",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isSaturdayMorning,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isSaturdayMorning = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Midi",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isSaturdayMidday,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isSaturdayMidday = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Soir",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isSaturdayNight,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isSaturdayNight = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              ExpansionTile(
+                                collapsedIconColor: Colors.pink,
+                                iconColor: Colors.pink,
+                                childrenPadding:
+                                    const EdgeInsets.only(left: 20),
+                                title: const Text('Dimanche',
+                                    style: TextStyle(
+                                        color: Colors.pink,
+                                        fontWeight: FontWeight.bold)),
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Matin",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isSundayMorning,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isSundayMorning = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Midi",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isSundayMidday,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isSundayMidday = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Soir",
+                                        style:
+                                            TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      Switch.adaptive(
+                                        activeTrackColor: Colors.pink,
+                                        value: isSundayNight,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isSundayNight = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 60,
+                              )
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: ElevatedButton(
+                                onPressed: () {},
+                                child: const Text(
+                                    "Sauvegarder les disponibilités",
+                                    style: TextStyle(
+                                        color: Colors.pink,
+                                        fontWeight: FontWeight.bold))),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -1,4 +1,8 @@
 import 'package:driver/models/enum/home_section_enum.dart';
+import 'package:driver/views/home/map_view.dart';
+import 'package:driver/views/home/order_details.dart';
+import 'package:driver/views/home/settings.dart';
+import 'package:driver/views/home/shift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -8,10 +12,14 @@ class HomeView extends StatefulWidget {
 }
 
 class HomeViewState extends State<HomeView> {
+  var mapview = MapView();
+  var settings = Settings();
+  var shift = ShiftView();
   Widget body = Container();
 
   @override
   void initState() {
+    body = mapview;
     super.initState();
   }
 
@@ -19,10 +27,50 @@ class HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          centerTitle: false,
-          title: Text(AppLocalizations.of(context)!.app_title),
+          forceMaterialTransparency: body == mapview,
+          backgroundColor: body == mapview ? Colors.transparent : Colors.black,
+          centerTitle: true,
+          elevation: 0,
+          title: Visibility(
+            visible: body == mapview,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => OrderDetails(
+                          orderNumber: "JJA-1119",
+                        )));
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width / 1.5,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(
+                      Icons.more_horiz,
+                      color: Colors.pinkAccent,
+                      size: 30,
+                    ),
+                    Text(
+                      "JJA-1119",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
+        extendBodyBehindAppBar: body == mapview,
         drawer: Drawer(
           child: SafeArea(
             child: Column(
@@ -38,19 +86,34 @@ class HomeViewState extends State<HomeView> {
                       leading: const Icon(Icons.home),
                       trailing: const Icon(Icons.keyboard_arrow_right_outlined),
                       title: Text(AppLocalizations.of(context)!.home),
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          body = mapview;
+                        });
+                        Navigator.of(context).pop();
+                      },
                     ),
                     ListTile(
                       leading: const Icon(Icons.work),
                       trailing: const Icon(Icons.keyboard_arrow_right_outlined),
                       title: Text(AppLocalizations.of(context)!.shift),
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          body = shift;
+                        });
+                        Navigator.of(context).pop();
+                      },
                     ),
                     ListTile(
                       leading: const Icon(Icons.settings),
                       trailing: const Icon(Icons.keyboard_arrow_right_outlined),
                       title: Text(AppLocalizations.of(context)!.settings),
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          body = settings;
+                        });
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ],
                 )),

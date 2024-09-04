@@ -17,33 +17,33 @@ class ShiftState extends State<ShiftView> {
   DateTime? _selectedDay;
   late ValueNotifier<List<Event>> _selectedEvents;
 
-  bool isMondayMorning = false;
-  bool isMondayMidday = false;
-  bool isMondayNight = false;
+  bool isMondayMorning = true;
+  bool isMondayMidday = true;
+  bool isMondayNight = true;
 
-  bool isTuesdayMorning = false;
-  bool isTuesdayMidday = false;
-  bool isTuesdayNight = false;
+  bool isTuesdayMorning = true;
+  bool isTuesdayMidday = true;
+  bool isTuesdayNight = true;
 
-  bool isWednesdayMorning = false;
-  bool isWednesdayMidday = false;
-  bool isWednesdayNight = false;
+  bool isWednesdayMorning = true;
+  bool isWednesdayMidday = true;
+  bool isWednesdayNight = true;
 
-  bool isThursdayMorning = false;
-  bool isThursdayMidday = false;
-  bool isThursdayNight = false;
+  bool isThursdayMorning = true;
+  bool isThursdayMidday = true;
+  bool isThursdayNight = true;
 
-  bool isFridayMorning = false;
-  bool isFridayMidday = false;
-  bool isFridayNight = false;
+  bool isFridayMorning = true;
+  bool isFridayMidday = true;
+  bool isFridayNight = true;
 
-  bool isSaturdayMorning = false;
-  bool isSaturdayMidday = false;
-  bool isSaturdayNight = false;
+  bool isSaturdayMorning = true;
+  bool isSaturdayMidday = true;
+  bool isSaturdayNight = true;
 
-  bool isSundayMorning = false;
-  bool isSundayMidday = false;
-  bool isSundayNight = false;
+  bool isSundayMorning = true;
+  bool isSundayMidday = true;
+  bool isSundayNight = true;
 
   @override
   void initState() {
@@ -360,6 +360,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isMondayMorning,
@@ -378,6 +381,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isMondayMidday,
@@ -395,6 +401,9 @@ class ShiftState extends State<ShiftView> {
                                         "Soir",
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
@@ -428,6 +437,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isTuesdayMorning,
@@ -446,6 +458,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isTuesdayMidday,
@@ -463,6 +478,9 @@ class ShiftState extends State<ShiftView> {
                                         "Soir",
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
@@ -494,6 +512,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isWednesdayMorning,
@@ -512,6 +533,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isWednesdayMidday,
@@ -529,6 +553,9 @@ class ShiftState extends State<ShiftView> {
                                         "Soir",
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
@@ -560,6 +587,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isThursdayMorning,
@@ -578,6 +608,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isThursdayMidday,
@@ -595,6 +628,9 @@ class ShiftState extends State<ShiftView> {
                                         "Soir",
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
@@ -626,6 +662,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isFridayMorning,
@@ -644,6 +683,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isFridayMidday,
@@ -661,6 +703,9 @@ class ShiftState extends State<ShiftView> {
                                         "Soir",
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
@@ -692,6 +737,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isSaturdayMorning,
@@ -710,6 +758,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isSaturdayMidday,
@@ -727,6 +778,9 @@ class ShiftState extends State<ShiftView> {
                                         "Soir",
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
@@ -758,6 +812,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isSundayMorning,
@@ -776,6 +833,9 @@ class ShiftState extends State<ShiftView> {
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
                                         value: isSundayMidday,
@@ -793,6 +853,9 @@ class ShiftState extends State<ShiftView> {
                                         "Soir",
                                         style:
                                             TextStyle(color: Colors.pinkAccent),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
                                       Switch.adaptive(
                                         activeTrackColor: Colors.pink,
